@@ -13,25 +13,28 @@ interface PDFViewerProps {
   onDownload?: () => void
 }
 
+// Demo PDF URL for demonstration purposes
+const DEMO_PDF_URL = 'https://www.w3.org/WAI/WCAG21/Techniques/pdf/img/table-word.pdf'
+
 export function PDFViewer({ content, open, onOpenChange, onDownload }: PDFViewerProps) {
   const [downloaded, setDownloaded] = React.useState(false)
 
   if (!content) return null
 
+  // Use actual content URL if it's a valid URL, otherwise use demo PDF
+  const pdfUrl = content.url.startsWith('http') ? content.url : DEMO_PDF_URL
+
   const handleOpenInNewTab = () => {
-    // For demo, open a sample PDF or show alert
-    const demoUrl = `https://www.w3.org/WAI/WCAG21/Techniques/pdf/img/table-word.pdf`
-    window.open(demoUrl, '_blank')
+    window.open(pdfUrl, '_blank')
   }
 
   const handleDownload = () => {
-    // Simulate download
     onDownload?.()
     setDownloaded(true)
 
-    // Create a demo download - in production this would be the actual file
+    // Create download link
     const link = document.createElement('a')
-    link.href = `https://www.w3.org/WAI/WCAG21/Techniques/pdf/img/table-word.pdf`
+    link.href = pdfUrl
     link.download = `${content.title.replace(/\s+/g, '-').toLowerCase()}.pdf`
     link.target = '_blank'
     document.body.appendChild(link)
@@ -52,18 +55,21 @@ export function PDFViewer({ content, open, onOpenChange, onDownload }: PDFViewer
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex-1 flex flex-col items-center justify-center py-12 bg-[var(--muted)] rounded-lg">
-          <div className="p-4 rounded-full bg-[var(--primary)]/10 mb-4">
-            <FileText className="h-12 w-12 text-[var(--primary)]" />
-          </div>
-          <h3 className="text-lg font-medium text-[var(--text-primary)] mb-2">
-            Visualização do PDF
-          </h3>
-          <p className="text-sm text-[var(--text-secondary)] text-center max-w-md mb-6">
-            {content.description}
-          </p>
-          <p className="text-xs text-[var(--text-muted)] mb-6">
-            Tamanho do arquivo: {content.fileSize || 'N/A'}
+        {/* PDF Preview Area */}
+        <div className="flex-1 min-h-[400px] bg-[var(--muted)] rounded-lg overflow-hidden">
+          <iframe
+            src={`${pdfUrl}#toolbar=1&navpanes=0`}
+            className="w-full h-full min-h-[400px] border-0"
+            title={content.title}
+          />
+        </div>
+
+        {/* Actions */}
+        <div className="pt-4 border-t border-[var(--border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <p className="text-xs text-[var(--text-muted)]">
+            Autor: {content.author || 'Equipe CONVIVA+'} •
+            Publicado em: {new Date(content.publishedAt).toLocaleDateString('pt-BR')}
+            {content.fileSize && ` • Tamanho: ${content.fileSize}`}
           </p>
           <div className="flex gap-3">
             <Button variant="outline" onClick={handleOpenInNewTab}>
@@ -84,13 +90,6 @@ export function PDFViewer({ content, open, onOpenChange, onDownload }: PDFViewer
               )}
             </Button>
           </div>
-        </div>
-
-        <div className="pt-4 border-t border-[var(--border)]">
-          <p className="text-xs text-[var(--text-muted)]">
-            Autor: {content.author || 'Equipe CONVIVA+'} •
-            Publicado em: {new Date(content.publishedAt).toLocaleDateString('pt-BR')}
-          </p>
         </div>
       </DialogContent>
     </Dialog>
