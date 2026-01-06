@@ -289,3 +289,58 @@ body {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* Radix UI Portal Styles - ensure CSS variables and Tailwind classes work in portals */
+[data-radix-portal] {
+  /* Inherit all CSS variables */
+  --primary: #FF6B35;
+  --primary-dark: #E85A24;
+  --primary-light: #FF8F66;
+  --primary-foreground: #FFFFFF;
+  --secondary: #2EC4B6;
+  --secondary-dark: #1FA396;
+  --secondary-light: #5DD3C8;
+  --secondary-foreground: #FFFFFF;
+  --accent: #FFBE0B;
+  --accent-dark: #E5A800;
+  --accent-foreground: #1A1A2E;
+  --background: #FAFAFA;
+  --foreground: #1A1A2E;
+  --surface: #FFFFFF;
+  --surface-hover: #F5F5F5;
+  --text-primary: #1A1A2E;
+  --text-secondary: #4A4A68;
+  --text-muted: #9898A6;
+  --border: #E5E5E5;
+  --border-focus: #FF6B35;
+  --success: #10B981;
+  --success-light: #D1FAE5;
+  --warning: #F59E0B;
+  --warning-light: #FEF3C7;
+  --error: #EF4444;
+  --error-light: #FEE2E2;
+  --info: #3B82F6;
+  --info-light: #DBEAFE;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A2E;
+  --input: #E5E5E5;
+  --input-focus: #FF6B35;
+  --ring: #FF6B35;
+  --muted: #F5F5F5;
+  --muted-foreground: #6B7280;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A2E;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
