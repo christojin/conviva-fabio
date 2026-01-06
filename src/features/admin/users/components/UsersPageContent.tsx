@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { User } from '@/types'
-import { users } from '@/data/users'
+import { useUsers } from '@/hooks/useDataStore'
 import { StatsBadge } from '@/components/shared'
 import { UsersHeader } from './UsersHeader'
 import { UsersFilters } from './UsersFilters'
@@ -17,6 +17,8 @@ export function UsersPageContent() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
+  const { users, addUser, updateUser, deleteUser } = useUsers()
+
   const filteredUsers = users.filter(user => {
     const matchesSearch = user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.email.toLowerCase().includes(searchQuery.toLowerCase())
@@ -25,6 +27,20 @@ export function UsersPageContent() {
       (statusFilter === 'active' ? user.isActive : !user.isActive)
     return matchesSearch && matchesRole && matchesStatus
   })
+
+  const handleAddUser = (userData: Parameters<typeof addUser>[0]) => {
+    addUser(userData)
+  }
+
+  const handleUpdateUser = (id: number, userData: Partial<User>) => {
+    updateUser(id, userData)
+  }
+
+  const handleDeleteUser = (user: User) => {
+    if (confirm(`Tem certeza que deseja excluir o usuário "${user.name}"?`)) {
+      deleteUser(user.id)
+    }
+  }
 
   return (
     <div className="space-y-6 animate-fadeIn">
@@ -47,16 +63,19 @@ export function UsersPageContent() {
       <UsersTable
         users={filteredUsers}
         onEditUser={setSelectedUser}
+        onDeleteUser={handleDeleteUser}
       />
 
       <AddUserDialog
         open={isAddDialogOpen}
         onOpenChange={setIsAddDialogOpen}
+        onAddUser={handleAddUser}
       />
 
       <EditUserDialog
         user={selectedUser}
         onClose={() => setSelectedUser(null)}
+        onUpdateUser={handleUpdateUser}
       />
     </div>
   )

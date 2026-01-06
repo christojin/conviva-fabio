@@ -1,8 +1,7 @@
 "use client"
 
 import React from 'react'
-import { Module } from '@/types'
-import { contents } from '@/data/content'
+import { Module, Content } from '@/types'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -14,11 +13,12 @@ const iconMap: Record<string, React.ElementType> = {
 
 interface ModulesAdminListProps {
   modules: Module[]
+  contents: Content[]
   onEditModule: (module: Module) => void
-  onDeleteModule?: (module: Module) => void
+  onDeleteModule: (module: Module) => void
 }
 
-export function ModulesAdminList({ modules, onEditModule, onDeleteModule }: ModulesAdminListProps) {
+export function ModulesAdminList({ modules, contents, onEditModule, onDeleteModule }: ModulesAdminListProps) {
   return (
     <div className="space-y-4">
       {modules.map((module, index) => {
@@ -97,7 +97,7 @@ export function ModulesAdminList({ modules, onEditModule, onDeleteModule }: Modu
                     variant="ghost"
                     size="icon"
                     className="text-[var(--error)]"
-                    onClick={() => onDeleteModule?.(module)}
+                    onClick={() => onDeleteModule(module)}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>

@@ -2,9 +2,10 @@
 
 import React from 'react'
 import { LucideIcon } from 'lucide-react'
+import { Module } from '@/types'
 import { PageHeader } from '@/components/shared'
 import { SearchInput, FilterSelect } from '@/components/shared'
-import { modules } from '@/data/modules'
+import { modules as defaultModules } from '@/data/modules'
 
 interface ContentPageHeaderProps {
   title: string
@@ -15,6 +16,7 @@ interface ContentPageHeaderProps {
   moduleFilter: string
   onModuleFilterChange: (value: string) => void
   searchPlaceholder?: string
+  modules?: Module[]
 }
 
 export function ContentPageHeader({
@@ -25,7 +27,8 @@ export function ContentPageHeader({
   onSearchChange,
   moduleFilter,
   onModuleFilterChange,
-  searchPlaceholder = 'Buscar...'
+  searchPlaceholder = 'Buscar...',
+  modules = defaultModules
 }: ContentPageHeaderProps) {
   const moduleOptions = [
     { value: 'all', label: 'Todos os módulos' },

@@ -11,9 +11,10 @@ interface ContentListProps {
   emptyIcon: LucideIcon
   emptyMessage: string
   onView?: (content: Content) => void
+  onDownload?: (content: Content) => void
 }
 
-export function ContentList({ contents, emptyIcon, emptyMessage, onView }: ContentListProps) {
+export function ContentList({ contents, emptyIcon, emptyMessage, onView, onDownload }: ContentListProps) {
   if (contents.length === 0) {
     return <EmptyState icon={emptyIcon} message={emptyMessage} />
   }
@@ -25,6 +26,7 @@ export function ContentList({ contents, emptyIcon, emptyMessage, onView }: Conte
           key={content.id}
           content={content}
           onView={onView ? () => onView(content) : undefined}
+          onDownload={onDownload ? () => onDownload(content) : undefined}
         />
       ))}
     </div>

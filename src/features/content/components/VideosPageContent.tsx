@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { Video } from 'lucide-react'
 import { Content } from '@/types'
-import { getContentByType } from '@/data/content'
+import { useContents, useModules } from '@/hooks/useDataStore'
 import { ContentPageHeader } from './ContentPageHeader'
 import { ContentList } from './ContentList'
 import { StatsBadge } from '@/components/shared'
@@ -15,7 +15,10 @@ export function VideosPageContent() {
   const [selectedContent, setSelectedContent] = useState<Content | null>(null)
   const [videoOpen, setVideoOpen] = useState(false)
 
-  const videos = getContentByType('video')
+  const { contents, incrementViews } = useContents()
+  const { modules } = useModules()
+
+  const videos = contents.filter(c => c.type === 'video' && c.isActive)
 
   const filteredVideos = videos.filter(content => {
     const matchesSearch = content.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -27,6 +30,7 @@ export function VideosPageContent() {
   const handleView = (content: Content) => {
     setSelectedContent(content)
     setVideoOpen(true)
+    incrementViews(content.id)
   }
 
   return (
@@ -40,6 +44,7 @@ export function VideosPageContent() {
         moduleFilter={moduleFilter}
         onModuleFilterChange={setModuleFilter}
         searchPlaceholder="Buscar vídeos..."
+        modules={modules}
       />
 
       <div className="flex gap-4 flex-wrap">
