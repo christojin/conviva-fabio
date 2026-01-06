@@ -1,0 +1,6 @@
+export { ContentPageHeader } from './components/ContentPageHeader'
+export { ContentList } from './components/ContentList'
+export { ApostilasPageContent } from './components/ApostilasPageContent'
+export { VideosPageContent } from './components/VideosPageContent'
+export { RevistasPageContent } from './components/RevistasPageContent'
+export { LinksPageContent } from './components/LinksPageContent'

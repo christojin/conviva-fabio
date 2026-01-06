@@ -1,0 +1,5 @@
+export { ModulesAdminPageContent } from './components/ModulesAdminPageContent'
+export { ModulesAdminHeader } from './components/ModulesAdminHeader'
+export { ModulesAdminList } from './components/ModulesAdminList'
+export { AddModuleDialog } from './components/AddModuleDialog'
+export { EditModuleDialog } from './components/EditModuleDialog'
